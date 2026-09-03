@@ -8,6 +8,7 @@ from taiga_kimai_sync.taiga.exceptions import (
 )
 from taiga_kimai_sync.taiga.models import (
     TaigaAuthResponse,
+    TaigaEpic,
     TaigaProject,
 )
 
@@ -65,6 +66,15 @@ class TaigaClient:
         )
 
         return [TaigaProject.model_validate(item) for item in response.json()]
+
+    async def get_epics(self, project_id: int) -> list[TaigaEpic]:
+        response = await self._request(
+            "GET",
+            "/api/v1/epics",
+            params={"project": project_id},
+        )
+
+        return [TaigaEpic.model_validate(item) for item in response.json()]
 
     async def _request(
         self,

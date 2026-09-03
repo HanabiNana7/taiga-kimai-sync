@@ -13,3 +13,12 @@ class TaigaProject(BaseModel):
     id: int
     name: str
     slug: str
+
+
+class TaigaEpic(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    id: int
+    ref: int
+    subject: str
+    project: int
