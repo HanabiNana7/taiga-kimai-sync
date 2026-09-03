@@ -10,6 +10,9 @@ from taiga_kimai_sync.kimai.models import (
     KimaiCustomer,
     KimaiCustomerCreate,
     KimaiCustomerUpdate,
+    KimaiProject,
+    KimaiProjectCreate,
+    KimaiProjectUpdate,
 )
 
 
@@ -85,6 +88,50 @@ class KimaiClient:
         )
 
         return KimaiCustomer.model_validate(response.json())
+
+    async def get_projects(
+        self,
+        customer_id: int | None = None,
+    ) -> list[KimaiProject]:
+        params: dict[str, int] = {
+            "visible": 3,
+        }
+
+        if customer_id is not None:
+            params["customer"] = customer_id
+
+        response = await self._request(
+            "GET",
+            "/api/projects",
+            params=params,
+        )
+
+        return [KimaiProject.model_validate(item) for item in response.json()]
+
+    async def create_project(
+        self,
+        project: KimaiProjectCreate,
+    ) -> KimaiProject:
+        response = await self._request(
+            "POST",
+            "/api/projects",
+            json=project.model_dump(exclude_none=True),
+        )
+
+        return KimaiProject.model_validate(response.json())
+
+    async def update_project(
+        self,
+        project_id: int,
+        project: KimaiProjectUpdate,
+    ) -> KimaiProject:
+        response = await self._request(
+            "PATCH",
+            f"/api/projects/{project_id}",
+            json=project.model_dump(exclude_none=True),
+        )
+
+        return KimaiProject.model_validate(response.json())
 
     async def _request(
         self,
