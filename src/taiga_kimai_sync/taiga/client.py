@@ -10,6 +10,8 @@ from taiga_kimai_sync.taiga.models import (
     TaigaAuthResponse,
     TaigaEpic,
     TaigaProject,
+    TaigaTask,
+    TaigaUserStory,
 )
 
 
@@ -75,6 +77,30 @@ class TaigaClient:
         )
 
         return [TaigaEpic.model_validate(item) for item in response.json()]
+
+    async def get_user_stories(
+        self,
+        epic_id: int,
+    ) -> list[TaigaUserStory]:
+        response = await self._request(
+            "GET",
+            "/api/v1/userstories",
+            params={"epic": epic_id},
+        )
+
+        return [TaigaUserStory.model_validate(item) for item in response.json()]
+
+    async def get_tasks(
+        self,
+        user_story_id: int,
+    ) -> list[TaigaTask]:
+        response = await self._request(
+            "GET",
+            "/api/v1/tasks",
+            params={"user_story": user_story_id},
+        )
+
+        return [TaigaTask.model_validate(item) for item in response.json()]
 
     async def _request(
         self,
