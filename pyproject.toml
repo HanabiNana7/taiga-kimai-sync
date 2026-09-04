@@ -4,7 +4,12 @@ version = "0.1.0"
 readme = "README.md"
 authors = [{ name = "HanabiNana7", email = "skyfly12401@gmail.com" }]
 requires-python = ">=3.12"
-dependencies = ["httpx>=0.28.1", "pydantic-settings>=2.15.0"]
+dependencies = [
+    "aiosqlite>=0.22.1",
+    "httpx>=0.28.1",
+    "pydantic-settings>=2.15.0",
+    "sqlalchemy>=2.0.52",
+]
 
 [project.scripts]
 taiga-kimai-sync = "taiga_kimai_sync:main"
@@ -15,6 +20,7 @@ build-backend = "uv_build"
 
 [dependency-groups]
 dev = [
+    "alembic>=1.19.1",
     "ipykernel>=7.3.0",
     "pre-commit>=4.6.2",
     "pytest>=9.1.1",

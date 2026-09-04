@@ -219,3 +219,8 @@ __marimo__/
 
 # Notebooks
 notebooks/*.ipynb
+
+# Database files
+data/*.db
+data/*.db-shm
+data/*.db-wal
