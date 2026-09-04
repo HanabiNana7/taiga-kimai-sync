@@ -18,6 +18,8 @@ class Settings(BaseSettings):
     kimai_url: str = ""
     kimai_token: str = ""
 
+    database_url: str = ""
+
     log_level: str = "INFO"
 
 
