@@ -15,4 +15,5 @@
 
 ## 同步流程
 
-已支援 `Taiga Project → Kimai Customer`：首次同步會建立 Customer 與映射；後續沿用既有 Kimai ID，並在名稱變更或 Customer 被隱藏時更新。資料一致時不重複寫入。
+- `Taiga Project → Kimai Customer`：首次同步會建立 Customer 與映射；後續沿用既有 Kimai ID，同步名稱與顯示狀態，資料一致時不重複寫入
+- `Taiga Epic → Kimai Project`：需先有父層映射，缺少時中止；首次同步會建立 Project 與映射，後續沿用既有 Kimai ID，同步名稱、Customer 與顯示狀態，資料一致時不重複寫入
