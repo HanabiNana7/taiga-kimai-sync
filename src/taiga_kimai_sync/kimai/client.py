@@ -7,6 +7,9 @@ from taiga_kimai_sync.kimai.exceptions import (
     KimaiAuthenticationError,
 )
 from taiga_kimai_sync.kimai.models import (
+    KimaiActivity,
+    KimaiActivityCreate,
+    KimaiActivityUpdate,
     KimaiCustomer,
     KimaiCustomerCreate,
     KimaiCustomerUpdate,
@@ -132,6 +135,50 @@ class KimaiClient:
         )
 
         return KimaiProject.model_validate(response.json())
+
+    async def get_activities(
+        self,
+        project_id: int | None = None,
+    ) -> list[KimaiActivity]:
+        params: dict[str, int] = {
+            "visible": 3,
+        }
+
+        if project_id is not None:
+            params["project"] = project_id
+
+        response = await self._request(
+            "GET",
+            "/api/activities",
+            params=params,
+        )
+
+        return [KimaiActivity.model_validate(item) for item in response.json()]
+
+    async def create_activity(
+        self,
+        activity: KimaiActivityCreate,
+    ) -> KimaiActivity:
+        response = await self._request(
+            "POST",
+            "/api/activities",
+            json=activity.model_dump(exclude_none=True),
+        )
+
+        return KimaiActivity.model_validate(response.json())
+
+    async def update_activity(
+        self,
+        activity_id: int,
+        activity: KimaiActivityUpdate,
+    ) -> KimaiActivity:
+        response = await self._request(
+            "PATCH",
+            f"/api/activities/{activity_id}",
+            json=activity.model_dump(exclude_none=True),
+        )
+
+        return KimaiActivity.model_validate(response.json())
 
     async def _request(
         self,
