@@ -12,3 +12,7 @@
 ## 同步映射
 
 使用 SQLite 與 SQLAlchemy 建立 `Taiga Project → Kimai Customer`、`Taiga Epic → Kimai Project`、`Taiga Task → Kimai Activity` 的一對一映射，並透過非同步 Session 與 Alembic migration 管理資料庫。
+
+## 同步流程
+
+已支援 `Taiga Project → Kimai Customer`：首次同步會建立 Customer 與映射；後續沿用既有 Kimai ID，並在名稱變更或 Customer 被隱藏時更新。資料一致時不重複寫入。
