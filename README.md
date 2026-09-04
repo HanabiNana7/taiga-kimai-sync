@@ -6,7 +6,7 @@
 
 - 透過 `.env` 管理連線與日誌設定
 - 驗證並讀取 Taiga 的 Project、Epic、User Story 與 Task
-- 驗證並管理 Kimai 的 Customer、Project 與 Activity
+- Kimai Client 以 API Token 驗證，並以共用非同步 Transport 串接 `customers`、`projects`、`activities` Resource，支援列表、單筆查詢、建立與更新
 - 使用 Pydantic 驗證回應、統一處理 API 錯誤，並以非同步 Context Manager 管理連線
 
 ## 同步映射
